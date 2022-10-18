@@ -23,8 +23,7 @@ let questions = [
     //     a: "sant",
     //     b: "falskt",
     //     correctAnswer: "falskt"
-    // }
-    // ,
+    // },
     // {
     //     question: "Jag föddes igår",
     //     a: "sant",
@@ -37,18 +36,18 @@ let questions = [
     //     b: "falskt",
     //     correctAnswer: "sant"
     // },
-    // {
-    //     question: "Jorden är platt",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "falskt"
-    // },
-    // {
-    //     question: "Ödlor styr världen",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "falskt"
-    // },
+    {
+        question: "Jorden är platt",
+        a: "sant",
+        b: "falskt",
+        correctAnswer: "falskt"
+    },
+    {
+        question: "Ödlor styr världen",
+        a: "sant",
+        b: "falskt",
+        correctAnswer: "falskt"
+    },
     {
         question: "Hades bor i Hades",
         a: "sant",
@@ -115,7 +114,7 @@ let checkAnswers = (arr) => {
 
             if (item === arr[i].correctAnswer) {
                 counter++;
-                q.style.accentColor = "DarkOliveGreen";
+                q.style.accentColor = "green";
                 q.nextElementSibling.innerText += " - Rätt";
             } else {
                 q.style.accentColor = "FireBrick";
@@ -124,13 +123,13 @@ let checkAnswers = (arr) => {
         })
         scoreH4.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
         if (counter > (0.75 * arr.length)) {
-            scoreH4.innerText += " Detta ger ett Mycket väl godkänt resultat. "
-            scoreH4.style.color = "DarkOliveGreen";
+            scoreH4.innerText += "\n Detta ger ett Mycket väl godkänt resultat. "
+            scoreH4.style.color = "green";
         } else if (counter > (0.5 * arr.length)) {
-            scoreH4.innerText += " Detta ger ett godkänt resultat. "
+            scoreH4.innerText += "\n Detta ger ett godkänt resultat. "
             scoreH4.style.color = "Coral";
         } else if (counter < (0.5 * arr.length)) {
-            scoreH4.innerText += " Detta ger ett Underkänt resultat :/ "
+            scoreH4.innerText += "\n Detta ger ett Underkänt resultat :/ "
             scoreH4.style.color = "FireBrick";
         }
     }
