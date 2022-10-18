@@ -6,24 +6,24 @@ let create = (x) => {
 }
 
 let questions = [
-    {
-        question: "Grön är min bästa färg",
-        a: "sant",
-        b: "falskt",
-        correctAnswer: "sant"
-    },
-    {
-        question: "Jag har två ben",
-        a: "sant",
-        b: "falskt",
-        correctAnswer: "sant"
-    },
-    {
-        question: "Jag bor i Kalmar",
-        a: "sant",
-        b: "falskt",
-        correctAnswer: "falskt"
-    }
+    // {
+    //     question: "Grön är min bästa färg",
+    //     a: "sant",
+    //     b: "falskt",
+    //     correctAnswer: "sant"
+    // },
+    // {
+    //     question: "Jag har två ben",
+    //     a: "sant",
+    //     b: "falskt",
+    //     correctAnswer: "sant"
+    // },
+    // {
+    //     question: "Jag bor i Kalmar",
+    //     a: "sant",
+    //     b: "falskt",
+    //     correctAnswer: "falskt"
+    // }
     // ,
     // {
     //     question: "Jag föddes igår",
@@ -49,35 +49,35 @@ let questions = [
     //     b: "falskt",
     //     correctAnswer: "falskt"
     // },
-    // {
-    //     question: "Hades bor i Hades",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "sant"
-    // },
-    // {
-    //     question: "Perseiderna dyker upp i juli",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "falskt"
-    // },
-    // {
-    //     question: "Gräset är grönt",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "sant"
-    // }
+    {
+        question: "Hades bor i Hades",
+        a: "sant",
+        b: "falskt",
+        correctAnswer: "sant"
+    },
+    {
+        question: "Perseiderna dyker upp i juli",
+        a: "sant",
+        b: "falskt",
+        correctAnswer: "falskt"
+    },
+    {
+        question: "Gräset är grönt",
+        a: "sant",
+        b: "falskt",
+        correctAnswer: "sant"
+    }
 ];
 
-let container = get("#container");
-let scoreH3 = create("h3");
+let backgroundBtn = get(".backgroundBtn");
+let container = get(".container");
+let scoreH4 = create("h4");
 let submitBtn = create("button");
 submitBtn.innerText = "Kolla svar";
 let radioBtnValue = [];
 counter = 0;
 
-
-
+//måste jag lägga dem i en li? Kan jag skapa label och lägga i? 
 questions.forEach((item, i) => {
     let questionDiv = create("div");
     questionDiv.classList.add("question-div");
@@ -97,13 +97,14 @@ questions.forEach((item, i) => {
     questionDiv.append(questionH3, list);
     list.append(liA, liB);
 })    
-    
-container.append(submitBtn, scoreH3);
+container.append(submitBtn, scoreH4);
+
+
 
 
 let checkAnswers = (arr) => {
     if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
-        scoreH3.innerText = "Du har inte fyllt i alla svaren."
+        scoreH4.innerText = "Du har inte fyllt i alla svaren."
     } else {
         let radioBtnAnswers = document.querySelectorAll("[type='radio']:checked");
         radioBtnAnswers.forEach(item => {
@@ -114,19 +115,38 @@ let checkAnswers = (arr) => {
 
             if (item === arr[i].correctAnswer) {
                 counter++;
-                q.style.accentColor = "green";
-                q.nextElementSibling.style.color = "green";
+                q.style.accentColor = "DarkOliveGreen";
+                q.nextElementSibling.innerText += " - Rätt";
             } else {
-                q.style.accentColor = "red";
-                q.nextElementSibling.style.color = "red";
+                q.style.accentColor = "FireBrick";
+                q.nextElementSibling.innerText += " - Fel";
             }
-            ;
         })
-        scoreH3.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga`;
+        scoreH4.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
+        if (counter > (0.75 * arr.length)) {
+            scoreH4.innerText += " Detta ger ett Mycket väl godkänt resultat. "
+            scoreH4.style.color = "DarkOliveGreen";
+        } else if (counter > (0.5 * arr.length)) {
+            scoreH4.innerText += " Detta ger ett godkänt resultat. "
+            scoreH4.style.color = "Coral";
+        } else if (counter < (0.5 * arr.length)) {
+            scoreH4.innerText += " Detta ger ett Underkänt resultat :/ "
+            scoreH4.style.color = "FireBrick";
+        }
     }
 }
 
 
 submitBtn.addEventListener("click", () => {
     checkAnswers(questions);
+})
+
+backgroundBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    container.classList.toggle("dark-mode-container");
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach(item => {
+        item.classList.toggle("button-dark-mode")
+    })
+    
 })
