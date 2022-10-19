@@ -20,13 +20,30 @@ body {
     padding: 10px;
     margin: 10px;
 }
-.hide {
-    display: none;
-}
 ul {
     list-style: none;
     accent-color: rgb(58, 131, 143);
 }
+/* input:checked + label {
+    background-color: lightblue;
+}
+label {
+    background-color: rgb(228, 228, 228);
+    padding: 5px;
+    border-radius: 10px;
+}
+label:hover {
+    background-color: lightblue;
+} */
+li {
+    margin: 10px;
+}
+/* få radiobutton att bli osynlig 
+input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+} */
 button {
     padding: 10px;
     margin: 20px;
@@ -38,6 +55,7 @@ button {
 .backgroundBtn {
     float: right;
 }
+
 /* Text */
 h1 {
     text-align: center;
@@ -47,6 +65,10 @@ h4 {
     margin-top: 30px;
     text-align: center;
 }
+
+/* .hide {
+    display: none;
+} */
 
 
 /* darkmode */
@@ -62,4 +84,7 @@ h4 {
     background-color: #1f2124;
     color:#adb0b5;
     border: 1px solid #6b6d71;
+}
+.dark-mode-label {
+    background-color: #131516;
 }
