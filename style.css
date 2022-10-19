@@ -33,6 +33,7 @@ button {
     border-radius: 10px;
     border-style: none;
     float: right;
+    cursor: pointer;
 }
 .backgroundBtn {
     float: right;
@@ -43,10 +44,9 @@ h1 {
     margin-bottom: 40px;
 }
 h4 {
+    margin-top: 30px;
     text-align: center;
 }
-
-
 
 
 /* darkmode */
@@ -56,9 +56,10 @@ h4 {
 }
 .dark-mode-container {
     background-color: #1f2124;
+    border: 1px solid #6b6d71;
 }
 .button-dark-mode {
     background-color: #1f2124;
     color:#adb0b5;
-    border: 1px solid;
+    border: 1px solid #6b6d71;
 }

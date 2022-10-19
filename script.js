@@ -36,18 +36,19 @@ let questions = [
     //     b: "falskt",
     //     correctAnswer: "sant"
     // },
-    {
-        question: "Jorden är platt",
-        a: "sant",
-        b: "falskt",
-        correctAnswer: "falskt"
-    },
-    {
-        question: "Ödlor styr världen",
-        a: "sant",
-        b: "falskt",
-        correctAnswer: "falskt"
-    },
+    // {
+    //     question: "Jorden är platt",
+    //     a: "sant",
+    //     b: "falskt",
+    //     correctAnswer: "falskt"
+    // },
+    // {
+    //     question: "Ödlor styr världen",
+    //     a: "sant",
+    //     b: "falskt",
+    //     correctAnswer: "falskt"
+    // }
+    // ,
     {
         question: "Hades bor i Hades",
         a: "sant",
@@ -75,8 +76,7 @@ let submitBtn = create("button");
 submitBtn.innerText = "Kolla svar";
 let radioBtnValue = [];
 counter = 0;
-
-//måste jag lägga dem i en li? Kan jag skapa label och lägga i? 
+ 
 questions.forEach((item, i) => {
     let questionDiv = create("div");
     questionDiv.classList.add("question-div");
@@ -99,8 +99,6 @@ questions.forEach((item, i) => {
 container.append(submitBtn, scoreH4);
 
 
-
-
 let checkAnswers = (arr) => {
     if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
         scoreH4.innerText = "Du har inte fyllt i alla svaren."
@@ -115,21 +113,22 @@ let checkAnswers = (arr) => {
             if (item === arr[i].correctAnswer) {
                 counter++;
                 q.style.accentColor = "green";
-                q.nextElementSibling.innerText += " - Rätt";
+                q.nextElementSibling.innerHTML += ` &#10004`;
             } else {
                 q.style.accentColor = "FireBrick";
-                q.nextElementSibling.innerText += " - Fel";
+                q.nextElementSibling.innerHTML += ` `;
             }
         })
+        console.log(0.5 * arr.length);
         scoreH4.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
         if (counter > (0.75 * arr.length)) {
             scoreH4.innerText += "\n Detta ger ett Mycket väl godkänt resultat. "
             scoreH4.style.color = "green";
-        } else if (counter > (0.5 * arr.length)) {
+        } else if (counter => (0.5 * arr.length)) {
             scoreH4.innerText += "\n Detta ger ett godkänt resultat. "
             scoreH4.style.color = "Coral";
         } else if (counter < (0.5 * arr.length)) {
-            scoreH4.innerText += "\n Detta ger ett Underkänt resultat :/ "
+            scoreH4.innerText += "\n Detta ger ett Underkänt resultat. "
             scoreH4.style.color = "FireBrick";
         }
     }
@@ -139,6 +138,7 @@ let checkAnswers = (arr) => {
 submitBtn.addEventListener("click", () => {
     checkAnswers(questions);
 })
+
 
 backgroundBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
