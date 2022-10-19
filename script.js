@@ -30,45 +30,64 @@ let questions = [
     //     b: "falskt",
     //     correctAnswer: "falskt"
     // },
-    // {
-    //     question: "Mamma heter Anneli",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "sant"
-    // },
+    {
+        question: "Vad heter mamma?",
+        type: 2,
+        a: "Anna",
+        b: "Anneli",
+        c: "Lovisa",
+        d: "Silivia",
+        correctAnswer: "Anneli"
+    },
     // {
     //     question: "Jorden är platt",
     //     a: "sant",
     //     b: "falskt",
     //     correctAnswer: "falskt"
     // },
-    // {
-    //     question: "Ödlor styr världen",
-    //     a: "sant",
-    //     b: "falskt",
-    //     correctAnswer: "falskt"
-    // }
-    // ,
+    {
+        question: "Vem styr världen?",
+        type: 2,
+        a: "Sofia",
+        b: "Ödlor",
+        c: "Elon Musk",
+        d: "Ingen",
+        correctAnswer: "Ödlor"
+    },
     {
         question: "Hades bor i Hades",
+        type: 1,
         a: "sant",
         b: "falskt",
         correctAnswer: "sant"
     },
     {
         question: "Perseiderna dyker upp i juli",
+        type: 1,
         a: "sant",
         b: "falskt",
         correctAnswer: "falskt"
     },
     {
         question: "Gräset är grönt",
+        type: 1,
         a: "sant",
         b: "falskt",
         correctAnswer: "sant"
+    },
+    {
+        question: "Vilket år blev olof palme mördad?",
+        type: 2,
+        a: "1985",
+        b: "1986",
+        c: "1987",
+        d: "1988",
+        correctAnswer: "1986"
     }
 ];
 
+
+//variables
 let backgroundBtn = get(".backgroundBtn");
 let container = get(".container");
 let scoreH4 = create("h4");
@@ -77,24 +96,39 @@ submitBtn.innerText = "Kolla svar";
 let radioBtnValue = [];
 counter = 0;
  
+
+let alternative = (item, i) => {
+    let li = create("li");
+    li.innerHTML = `<input type="radio" name="question${i}" id="${item}${i}" value="${item}">
+    <label for="${item}${i}">${item}</label>`;
+    return li;
+}
+
 questions.forEach((item, i) => {
     let questionDiv = create("div");
     questionDiv.classList.add("question-div");
     let questionH3 = create("h3");
     let list = create("ul");
     questionH3.innerText = item.question;
+
+    if (item.type === 1) {
+        container.append(questionDiv);
+        questionDiv.append(questionH3, list);
         
-    let liA = create("li");
-    liA.innerHTML = `<input type="radio" name="question${i}" id="${item.a}${i}" value="${item.a}">
-    <label for="${item.a}${i}">${item.a}</label>`;
+        let liA = alternative(item.a, i);
+        let liB = alternative(item.b, i);
+        list.append(liA, liB);
+
+    } else if (item.type === 2) {
+        let liA = alternative(item.a, i);
+        let liB = alternative(item.b, i);
+        let liC = alternative(item.c, i);
+        let liD = alternative(item.d, i);
         
-    let liB = create("li");
-    liB.innerHTML = `<input type="radio" name="question${i}" id="${item.b}${i}" value="${item.b}">
-    <label for="${item.b}${i}">${item.b}</label>`;
-    
-    container.append(questionDiv);
-    questionDiv.append(questionH3, list);
-    list.append(liA, liB);
+        container.append(questionDiv);
+        questionDiv.append(questionH3, list);
+        list.append(liA, liB, liC, liD);
+    }
 })    
 container.append(submitBtn, scoreH4);
 
@@ -119,18 +153,22 @@ let checkAnswers = (arr) => {
                 q.nextElementSibling.innerHTML += ` `;
             }
         })
-        console.log(0.5 * arr.length);
-        scoreH4.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
-        if (counter > (0.75 * arr.length)) {
-            scoreH4.innerText += "\n Detta ger ett Mycket väl godkänt resultat. "
-            scoreH4.style.color = "green";
-        } else if (counter => (0.5 * arr.length)) {
-            scoreH4.innerText += "\n Detta ger ett godkänt resultat. "
-            scoreH4.style.color = "Coral";
-        } else if (counter < (0.5 * arr.length)) {
-            scoreH4.innerText += "\n Detta ger ett Underkänt resultat. "
-            scoreH4.style.color = "FireBrick";
-        }
+        scoreResult(scoreH4, arr);
+    }
+}
+
+let scoreResult = (score, arr) => {
+    //lägg till effekt vid alla rätt?
+    score.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
+    if (counter > (0.75 * arr.length)) {
+        score.innerText += "\n Detta ger ett Mycket väl godkänt resultat. "
+        score.style.color = "green";
+    } else if (counter => (0.5 * arr.length)) {
+        score.innerText += "\n Detta ger ett godkänt resultat. "
+        score.style.color = "Coral";
+    } else if (counter < (0.5 * arr.length)) {
+        score.innerText += "\n Detta ger ett Underkänt resultat. "
+        score.style.color = "FireBrick";
     }
 }
 
@@ -147,5 +185,5 @@ backgroundBtn.addEventListener("click", () => {
     buttons.forEach(item => {
         item.classList.toggle("button-dark-mode")
     })
-    
 })
+
