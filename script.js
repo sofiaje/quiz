@@ -6,56 +6,72 @@ let create = (x) => {
 }
 
 let questions = [
-    {
-        question: "Vilken färg är bäst?",
-        answers: ["Grön", "Gul", "Lila", "Turkos", "Blå", "rosa"],
-        correctAnswer: "Grön"
-    },
-    {
-        question: "Jag har två ben",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Sant"
-    },
-    {
-        question: "Jag bor i Kalmar",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Falskt"
-    },
-        {
-        question: "Vem styr världen?",
-        answers: ["Sofia", "Ödlor", "Elon Musk", "Ingen"],
-        correctAnswer: "Ödlor"
-    },
-    {
-        question: "Hades bor i Hades",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Sant"
-    },
+    // {
+    //     question: "Vilken färg är bäst?",
+    //     type: "radio",
+    //     answers: ["Grön", "Gul", "Lila", "Turkos"],
+    //     correctAnswer: "Grön"
+    // },
+    // {
+    //     question: "Jag har två ben",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Sant"
+    // },
+    // {
+    //     question: "Jag bor i Kalmar",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Falskt"
+    // },
+    //     {
+    //     question: "Vem styr världen?",
+    //     type: "radio",
+    //     answers: ["Sofia", "Ödlor", "Elon Musk", "Ingen"],
+    //     correctAnswer: "Ödlor"
+    // },
+    // {
+    //     question: "Hades bor i Hades",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Sant"
+    // },
     {
         question: "Perseiderna dyker upp i juli",
+        type: "radio",
         answers: ["Sant", "Falskt"],
         correctAnswer: "Falskt"
     },
+    // {
+    //     question: "Vilka metoder kan jag använda om jag vill lägga till ett element i en array?",
+    //     type: "checkbox",
+    //     answers: ["pop", "push", "shift", "unshift"],
+    //     correctAnswer: ["unshift", "push"]
+    // },
     {
         question: "Vad dricker Fantomen helst?",
+        type: "radio",
         answers: ["Cola", "Vatten", "Kaffe", "Mjölk"],
         correctAnswer: "Mjölk"
     },
     {
-        question: "Vilken metod ska jag använda om jag vill lägga till ett element i början av en array?",
-        answers: ["pop", "push", "shift", "unshift"],
-        correctAnswer: "unshift"
-    },
-    {
         question: "Gräset är grönt",
+        type: "radio",
         answers: ["Sant", "Falskt"],
         correctAnswer: "Sant"
     },
-    {
-        question: "Vilket år blev olof palme mördad?",
-        answers: ["1985", "1986", "1987", "1988"],
-        correctAnswer: "1986"
-    }
+    // {
+    //     question: "Vilket år blev Olof Palme skjuten?",
+    //     type: "radio",
+    //     answers: ["1985", "1986", "1987", "1988"],
+    //     correctAnswer: "1986"
+    // },
+    // {
+    //     question: "Vilka metoder kan jag använda om jag vill lägga till ett element i en array?",
+    //     type: "checkbox",
+    //     answers: ["pop", "push", "shift", "unshift"],
+    //     correctAnswer: ["unshift", "push"]
+    // }
 ];
 
 //variables
@@ -65,12 +81,13 @@ let scoreH4 = create("h4");
 let submitBtn = create("button");
 submitBtn.innerText = "Kolla svar";
 let radioBtnValue = [];
+let checkBoxValue = [];
 counter = 0;
  
 //funktion som skapar svars-alternativ
-let createLi = (item, i) => {
+let createLi = (item, i, type) => {
     let li = create("li");
-    li.innerHTML = `<input type="radio" name="question${i}" id="${item}${i}" value="${item}">
+    li.innerHTML = `<input type="${type}" name="question${i}" id="${item}${i}" value="${item}" class="${type}">
     <label for="${item}${i}">${item}</label>`;
     return li;
 }
@@ -87,58 +104,72 @@ questions.forEach((question, i) => {
     questionDiv.append(questionH3, list);
 
     question.answers.forEach(answer => {
-        let li = createLi(answer, i);
-        list.append(li);
+        if (questions[i].type === "radio") {
+            let li = createLi(answer, i, "radio");
+            list.append(li);
+        } else if (questions[i].type === "checkbox") {
+            let li = createLi(answer, i, "checkbox");
+            list.append(li);
+        }
     })
 })
 
 container.append(submitBtn, scoreH4);
 
-
+//if else beroende på typ? 
 let checkAnswers = (arr) => {
-    if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
-        scoreH4.innerText = "Du har inte fyllt i alla svaren."
-    } else {
-        let radioBtnAnswers = document.querySelectorAll("[type='radio']:checked");
+    
+    // if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
+    //     scoreH4.innerText = "Du har inte fyllt i alla svaren! \nGissa om du inte kan."
+    // } else {
+        
+        arr.sort((a,b) => b.type.localeCompare(a.type));
+
+        let radioBtnAnswers = document.querySelectorAll(" .radio:checked");
         radioBtnAnswers.forEach(item => {
             radioBtnValue.push(item.value);
         })
+
+        let checkBoxAnswers = document.querySelectorAll(" .checkbox:checked");
+        checkBoxAnswers.forEach(item => {
+            checkBoxValue.push(item.value);
+        })
+
+
         radioBtnValue.forEach((item, i) => {
             let q = get(`[name='question${i}']:checked`);
 
             if (item === arr[i].correctAnswer) {
                 counter++;
-                q.style.accentColor = "green";
-                q.nextElementSibling.innerHTML += ` &#10004`;
+                q.style.accentColor = "SeaGreen";
+                q.nextElementSibling.innerHTML += ` - Rätt svar`;
             } else {
-                q.style.accentColor = "FireBrick";
-                q.nextElementSibling.innerHTML += ` `;
-
+                q.style.accentColor = "IndianRed";
+                q.nextElementSibling.innerHTML += ` - Fel svar`;
             }
         })
         scoreResult(scoreH4, arr);
+        submitBtn.remove(); 
     }
-}
+// }
 
 let scoreResult = (score, arr) => {
-    //lägg till effekt vid alla rätt?
     score.innerText = `Du fick ${counter} rätt av ${arr.length} möjliga! `;
     if (counter > (0.75 * arr.length)) {
         score.innerText += "\n Detta ger ett Mycket väl godkänt resultat. "
-        score.style.color = "green";
+        score.style.color = "SeaGreen";
     } else if (counter => (0.5 * arr.length)) {
         score.innerText += "\n Detta ger ett godkänt resultat. "
-        score.style.color = "Coral";
+        score.style.color = "LightSalmon";
     } else if (counter < (0.5 * arr.length)) {
         score.innerText += "\n Detta ger ett Underkänt resultat. "
-        score.style.color = "FireBrick";
+        score.style.color = "IndianRed";
     }
 }
 
 submitBtn.addEventListener("click", () => {
     checkAnswers(questions);
 })
-
 
 backgroundBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
