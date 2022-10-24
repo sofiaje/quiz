@@ -18,36 +18,36 @@ let questions = [
         answers: ["Sant", "Falskt"],
         correctAnswer: "Sant"
     },
-    {
-        question: "Vem upfann glödlampan?",
-        type: "radio",
-        answers: ["James Watt", "Nikola Tesla", "Thomas Edison", "Louis Breguet"],
-        correctAnswer: "Thomas Edison",
-    },
-    {
-        question: "Bor Hades i Hades?",
-        type: "radio",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Sant"
-    },
-    {
-        question: "Vad dricker Fantomen helst?",
-        type: "radio",
-        answers: ["Cola", "Vatten", "Kaffe", "Mjölk"],
-        correctAnswer: "Mjölk"
-    },
-    {
-        question: "Vilket år blev Olof Palme skjuten?",
-        type: "radio",
-        answers: ["1985", "1986", "1987", "1988"],
-        correctAnswer: "1986"
-    },
-    {
-        question: "Hur länge sover en vuxen människa i Sverige i genomsnitt per natt?",
-        type: "radio",
-        answers: ["Strax under sju timmar", "Strax under åtta timmar", "Strax under nio timmar"],
-        correctAnswer: "Strax under sju timmar"
-    }
+    // {
+    //     question: "Vem upfann glödlampan?",
+    //     type: "radio",
+    //     answers: ["James Watt", "Nikola Tesla", "Thomas Edison", "Louis Breguet"],
+    //     correctAnswer: "Thomas Edison",
+    // },
+    // {
+    //     question: "Bor Hades i Hades?",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Sant"
+    // },
+    // {
+    //     question: "Vad dricker Fantomen helst?",
+    //     type: "radio",
+    //     answers: ["Cola", "Vatten", "Kaffe", "Mjölk"],
+    //     correctAnswer: "Mjölk"
+    // },
+    // {
+    //     question: "Vilket år blev Olof Palme skjuten?",
+    //     type: "radio",
+    //     answers: ["1985", "1986", "1987", "1988"],
+    //     correctAnswer: "1986"
+    // },
+    // {
+    //     question: "Hur länge sover en vuxen människa i Sverige i genomsnitt per natt?",
+    //     type: "radio",
+    //     answers: ["Strax under sju timmar", "Strax under åtta timmar", "Strax under nio timmar"],
+    //     correctAnswer: "Strax under sju timmar"
+    // }
 ];
 
 let checkboxQuestions = [
@@ -78,6 +78,7 @@ let container = get(".container");
 let containerBonus = get(".containerBonus");
 let scoreH4 = create("h4");
 let submitBtn = create("button");
+submitBtn.classList.add("submitBtn");
 submitBtn.innerText = "Kolla svar";
 let radioBtnValue = [];
 counter = 0;
@@ -101,8 +102,8 @@ let writeQuestions = (arr, secondArr) => {
         let questionH3 = create("h3");
         let list = create("ul");
         questionH3.innerText = question.question;
-        container.append(questionDiv);
         questionDiv.append(questionH3, list);
+        container.append(questionDiv);
     
         question.answers.forEach(answer => {
                 let li = createLi(answer, i, "radio");
@@ -110,28 +111,31 @@ let writeQuestions = (arr, secondArr) => {
         })
     })
 
+    //bonusfrågor rubrik
     let h3 = create("h3");
     let p = create("p");
     h3.innerText = "Bonusfrågor!";
-    h3.classList.add("bonus");
+    h3.classList.add("bonus-question");
     p.innerText = "Bonusfrågor är frivilliga att svara på men krävs för att nå de högre betygsnivåerna. OBS, man får bara poäng om alla rätta alternativ är ikryssade under varje fråga. Ohoj!";
     container.append(h3, p);
 
+    //skriver ut bonusfrågor
     secondArr.forEach((question, i) => {
         let questionDiv = create("div");
         questionDiv.classList.add("question-div");
         let questionH3 = create("h3");
         let bonusQuestionP = create("p");
+        bonusQuestionP.classList.add(`p${i}`);
         let list = create("ul");
         questionH3.innerText = question.question;
         container.append(questionDiv);
-        questionDiv.append(questionH3, list);
+        questionDiv.append(questionH3, bonusQuestionP, list);
     
         question.answers.forEach(answer => {
                 let li = createLi(answer, i, "checkbox");
                 list.append(li);
         })
-        questionDiv.append(bonusQuestionP);
+        
     })
 
     container.append(submitBtn, scoreH4);
@@ -146,7 +150,7 @@ let checkAnswers = (arr, secondArr) => {
     
     //rätta radio-frågor
     if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
-        scoreH4.innerText = "Du har inte fyllt i de första, obligatoriska frågorna. \nGissa om du inte kan!"
+        scoreH4.innerText = "Du har inte fyllt i de obligatoriska frågorna. \nGissa om du inte kan!"
     } else {
         let radioBtnAnswers = document.querySelectorAll(" .radio:checked");
         radioBtnAnswers.forEach(item => {
@@ -179,14 +183,12 @@ let checkAnswers = (arr, secondArr) => {
             checkbox = document.querySelectorAll(`[name='checkboxquestion${i}']:checked`); //userinput första frågan
 
             rightcheckboxAnswers = secondArr[i].correctAnswer;
-            console.log("rightcheckboxanswers", i, rightcheckboxAnswers);
 
             //för att få ut values på userinput
             //skriva ut rätt/fel svar
             countAnswers = "";
             checkbox.forEach(item => {
                 if (rightcheckboxAnswers.includes(item.value)) {
-                    // console.log(item);
                     item.nextElementSibling.style.color = "SeaGreen"
                     item.nextElementSibling.innerText += " - Rätt svar" 
                     countAnswers++;
@@ -198,6 +200,9 @@ let checkAnswers = (arr, secondArr) => {
             })
             if (countAnswers === rightcheckboxAnswers.length) {
                 counter++;
+            } else {
+                let ppp = document.querySelector(`.p${i}`);
+                ppp.innerText = `Du måste hitta ${rightcheckboxAnswers.length} svar för att få poäng`
             }
         }
 
@@ -214,11 +219,12 @@ let scoreResult = (score, arr, secondArr) => {
     score.innerText = `Du fick ${counter} rätt av ${length} möjliga!`;    
     if (counter === length) {
         score.innerText += "\n Wooo! Hurra! Snyggt!"
+        score.style.color = "SeaGreen";
     } else if (counter > (0.75 * length)) {
         score.innerText += "\n Bra jobbat! Ett Mycket väl godkänt resultat. "
         score.style.color = "SeaGreen";
     } else if (counter >= (0.5 * arr.length)) {
-        score.innerText += "\n Det ger godkänt: ett helt ok resultat."
+        score.innerText += "\n Det ger ett godkänt resultat: helt ok va!"
         score.style.color = "LightSalmon";
     } else if (counter < (0.5 * length)) {
         score.innerText += "\n Underkänt! Kanske testa igen?"

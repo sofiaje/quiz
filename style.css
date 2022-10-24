@@ -6,14 +6,19 @@ body {
 }
 .container {
     background-color: white;
-    margin: 30px auto;
+    margin: 15px auto;
     padding: 10px;
     max-width: 500px;
     min-width: 230px;
     overflow: auto;
     border-radius: 20px;
+    border: 1px solid white;
 }
-
+header {
+    max-width: 520px;
+    margin: 0px auto;
+    overflow: auto;
+}
 .question-div {
     max-width: 400px;
     /* border: 1px solid rgb(187, 210, 187); */
@@ -46,11 +51,17 @@ input {
 } */
 button {
     padding: 10px;
-    margin: 20px;
     border-radius: 10px;
     border-style: none;
-    float: right;
     cursor: pointer;
+}
+.submitBtn {
+    float: right;
+    margin: 10px;
+}
+.backgroundBtn {
+    background-color: white;
+    float: right;
 }
 /* .backgroundBtn {
     float: right;
@@ -65,8 +76,8 @@ h1 {
     text-align: center;
     margin-bottom: 40px;
 }
-.bonus {
-    border-top: 3px dotted #6b6d71;
+.bonus-question {
+    border-top: 2px dotted #6b6d71;
     padding-top: 40px;
     margin: 80px 0px 20px 20px;
     /* text-align: center; */
