@@ -48,7 +48,6 @@ let questions = [
         answers: ["Insomnia", "Hypnofobi", "Skotofobi", "Hypersomnia"],
         correctAnswer: "Hypnofobi"
     },
-
     {
         question: "Nedan följer några  myter om sömn, vilka stämmer?",
         type: "checkbox",
@@ -150,7 +149,7 @@ let checkAnswers = (arr) => {
                 radioBtnAnswer.nextElementSibling.style.color = "SeaGreen";
                 title.innerText += " (1p)";
             } else {
-                radioBtnAnswer.nextElementSibling.style.color = "Crimson";
+                radioBtnAnswer.nextElementSibling.style.color = "IndianRed";
                 title.innerText += " (0p)";
             }
         } else if (arr[i].type === "checkbox") {
@@ -164,7 +163,7 @@ let checkAnswers = (arr) => {
                     box.nextElementSibling.style.color = "SeaGreen";
                 } else {
                     countAnswers--;
-                    box.nextElementSibling.style.color = "crimson";
+                    box.nextElementSibling.style.color = "IndianRed";
                 }
             })
             
