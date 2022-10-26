@@ -17,12 +17,13 @@ body {
     overflow: auto;
 }
 header {
-    max-width: 580px;
+    max-width: 570px;
     margin: 0px auto;
     overflow: auto;
 }
 div div {
     /* border: 1px solid rgb(187, 210, 187); */
+    max-width: 500px;
     padding: 20px;
     margin: 10px;
 }
@@ -34,7 +35,7 @@ div div {
 }
 ul {
     list-style: none;
-    accent-color: rgb(58, 131, 143);
+    accent-color: teal;
 }
 /* input:checked + label {
     background-color: lightblue;
@@ -73,6 +74,11 @@ button {
     background-color: white;
     float: right;
 }
+.small {
+    height: 200px;
+    object-position: center;
+    margin-left: 30px;
+}
 
 /* Text */
 h1 {
@@ -89,6 +95,10 @@ h4 {
 p {
     margin-top: 5px;
 }
+.page-title {
+    color:goldenrod;
+}
+
 
 
 /* darkmode */
@@ -104,6 +114,12 @@ p {
     background-color: #1f2124;
     color:#adb0b5;
     border: 1px solid #6b6d71;
+}
+.page-title-dark-mode {
+    color: #dddddd;
+}
+.image-hide {
+    display:none;
 }
 /* .dark-mode-label {
     background-color: #2b2d2f;

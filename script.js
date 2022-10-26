@@ -6,48 +6,67 @@ let create = (x) => {
 }
 
 let questions = [
-    // {
-    //     question: "Blåvalen är det största djuret som någonsin levt",
-    //     type: "radio",
-    //     answers: ["Sant", "Falskt"],
-    //     correctAnswer: "Sant"
-    // },
-    // {
-    //     question: "Sant eller falskt?",
-    //     type: "radio",
-    //     answers: ["Sant", "Falskt"],
-    //     correctAnswer: "Sant"
-    // },
-    // {
-    //     question: "Vem upfann glödlampan?",
-    //     type: "radio",
-    //     answers: ["James Watt", "Nikola Tesla", "Thomas Edison", "Louis Breguet"],
-    //     correctAnswer: "Thomas Edison",
-    // },
-    // {
-    //     question: "Bor Hades i Hades?",
-    //     type: "radio",
-    //     answers: ["Sant", "Falskt"],
-    //     correctAnswer: "Sant"
-    // },
-    // {
-    //     question: "Vilka länder är inte med i EU?",
-    //     type: "checkbox",
-    //     answers: ["Irland", "Island", "Norge", "Liechtenstein"],
-    //     correctAnswer: ["Island", "Norge", "Liechtenstein"],
-    // },
-    // {
-    //     question: "Vad dricker Fantomen helst?",
-    //     type: "radio",
-    //     answers: ["Cola", "Vatten", "Kaffe", "Mjölk"],
-    //     correctAnswer: "Mjölk"
-    // },
-    // {
-    //     question: "Vilket år blev Olof Palme skjuten?",
-    //     type: "radio",
-    //     answers: ["1985", "1986", "1987", "1988"],
-    //     correctAnswer: "1986"
-    // },
+    {
+        question: "Vad brukar man säga att man ska räkna när man inte kan sova?",
+        type: "radio",
+        answers: ["Katter", "Får", "Algebra", "Tår"],
+        correctAnswer: "Får"
+    },
+    {
+        question: "Sömnbehovet avtar med åldern",
+        type: "radio",
+        answers: ["Sant", "Falskt"],
+        correctAnswer: "Sant"
+    },
+    {
+        question: "Vad står begreppet REM för?",
+        type: "radio",
+        answers: ["Relaxed eye movement", "Rare eye measurement", "Rapid eye movement", "Rest eye management"],
+        correctAnswer: "Rapid eye movement",
+    },
+    {
+        question: "I djurriket kan sömnvanorna se väldigt annorlunda ut, vilka av dessa sover i snitt mer än 15h per dygn?",
+        type: "checkbox",
+        answers: ["Katten", "Elefanten", "Bältdjuret", "Koalan"],
+        correctAnswer: ["Katten", "Bältdjuret", "Koalan"]
+    },
+        {
+        question: "I sagan om Törnrosa vilar en förbannelse över prinsessan, denna säger att hon kommer att sticka sig på en slända och falla i en hundraårig sömn. Hur gammal är Törnrosan när profetian går i uppfyllelse?",
+        type: "radio",
+        answers: ["13", "15", "16", "18"],
+        correctAnswer: "16"
+    },
+    {
+        question: "Hjärnans främre lober, den del som styr omdöme och planeringsförmåga, är extra aktiv när vi drömmer",
+        type: "radio",
+        answers: ["Sant", "Falskt"],
+        correctAnswer: "Falskt"
+    },
+    {
+        question: "Sömnfobi är en irrationell rädsla för att somna, vad kallas detta med ett annat ord?",
+        type: "radio",
+        answers: ["Insomnia", "Hypnofobi", "Skotofobi", "Hypersomnia"],
+        correctAnswer: "Hypnofobi"
+    },
+
+    {
+        question: "Nedan följer några  myter om sömn, vilka stämmer?",
+        type: "checkbox",
+        answers: ["Man måste sova minst 8 timmar per natt", "Att vistas i dagsljus på dagen gör att man sover bättre", "En potatis innan läggdags kan ha en positiv effekt på sömnen", "Om man är trött när man vaknar så har man sovit otillräckligt"],
+        correctAnswer: ["Att vistas i dagsljus på dagen gör att man sover bättre", "En potatis innan läggdags kan ha en positiv effekt på sömnen"],
+    },
+    {
+        question: "Vad innebär begreppet sömnparalys?",
+        type: "radio",
+        answers: ["Man är medveten om att man sover", "Man har vaknat men kan inte röra sig", "Man drömmer ovanligt färgstarkt", "Man minns ej vad man drömt"],
+        correctAnswer: "Man har vaknat men kan inte röra sig"
+    },
+    {
+        question: "Rekordet för dygn utan sömn sägs ha slagits av en amerikansk discjockey på 1960-talet, hur många dygn vad han vaken?",
+        type: "radio",
+        answers: ["8", "10", "11", "14"],
+        correctAnswer: "11"
+    },
     {
         question: "Hur länge sover en vuxen människa i Sverige i genomsnitt per natt?",
         type: "radio",
@@ -55,16 +74,10 @@ let questions = [
         correctAnswer: "Strax under sju timmar"
     },
     {
-        question: "Vilka metoder kan jag använda om jag vill ta bort ett element i en array?",
+        question: "Sömnen är uppdelad i så kallade sömncykler, vilka olika faser brukar man tala om? ",
         type: "checkbox",
-        answers: ["pop", "push", "shift", "unshift"],
-        correctAnswer: ["pop", "shift"],
-    },
-    {
-        question: "Vilka namn har du?",
-        type: "checkbox",
-        answers: ["Sofia", "Tove", "Helena", "Madeleine"],
-        correctAnswer: ["Sofia", "Tove", "Helena"]
+        answers: ["Drömsömnen", "Bassömnen", "Insomningsfasen", "Uppvakningsfasen", "Djupsömnen"],
+        correctAnswer: ["Drömsömnen", "Bassömnen", "Insomningsfasen", "Djupsömnen"]
     }
 ];
 
@@ -72,6 +85,7 @@ let questions = [
 let backgroundBtn = get(".background-btn");
 let container = get(".container");
 let scoreH4 = create("h4");
+
 
 let submitBtn = create("button");
 submitBtn.classList.add("submit-btn");
@@ -111,7 +125,6 @@ let writeQuestions = (arr) => {
                     let li = createLi(answer, i, "checkbox");
                     list.append(li);
             })
-            
         }
     })
     container.append(submitBtn, scoreH4);
@@ -161,10 +174,9 @@ let checkAnswers = (arr) => {
                 title.innerText += " (1p)";
             } else {
                 title.innerText += " (0p)";
-                checkboxComment.innerText = `Det finns ${rightCheckboxAnswers.length} rätta svarsalternativ, \ndu måste hitta alla för att poäng.`
+                checkboxComment.innerText = `Det finns ${rightCheckboxAnswers.length} rätta svarsalternativ, \ndu måste hitta alla för att få poäng.`
             }
         }
-
         scoreResult(scoreH4, arr);
         submitBtn.remove(); 
     }
@@ -184,7 +196,7 @@ let scoreResult = (score, arr) => {
         score.innerText += "\n Det ger ett godkänt resultat: helt ok va!"
         score.style.color = "Goldenrod";
     } else if (counter < (0.6 * length)) {
-        score.innerText += "\n Underkänt! Kanske testa igen?"
+        score.innerText += "\n Underkänt! Somnade du?"
         score.style.color = "IndianRed";
     }
 }
@@ -194,8 +206,10 @@ backgroundBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     container.classList.toggle("dark-mode-container");
     document.querySelectorAll("button").forEach(item => {
-        item.classList.toggle("button-dark-mode")
+        item.classList.toggle("button-dark-mode");
     })
+    get(".page-title").classList.toggle("page-title-dark-mode")
+    get(".small").classList.toggle("image-hide");
 })
 
 //skriver ut frågorna
