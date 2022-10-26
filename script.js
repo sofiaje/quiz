@@ -191,10 +191,10 @@ let scoreResult = (score, arr) => {
     } else if (counter > (0.75 * length)) {
         score.innerText += "\n Bra jobbat! Ett Mycket väl godkänt resultat. "
         score.style.color = "SeaGreen";
-    } else if (counter > (0.5 * length)) {
+    } else if (counter >= (0.5 * length)) {
         score.innerText += "\n Det ger ett godkänt resultat: helt ok va!"
         score.style.color = "Goldenrod";
-    } else if (counter < (0.6 * length)) {
+    } else {
         score.innerText += "\n Underkänt! Somnade du?"
         score.style.color = "IndianRed";
     }
