@@ -6,18 +6,18 @@ let create = (x) => {
 }
 
 let questions = [
-    {
-        question: "Är Blåvalen är det största djuret (som människan känner till) som någonsin levt?",
-        type: "radio",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Sant"
-    },
-    {
-        question: "Sant eller falskt?",
-        type: "radio",
-        answers: ["Sant", "Falskt"],
-        correctAnswer: "Sant"
-    },
+    // {
+    //     question: "Blåvalen är det största djuret som någonsin levt",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Sant"
+    // },
+    // {
+    //     question: "Sant eller falskt?",
+    //     type: "radio",
+    //     answers: ["Sant", "Falskt"],
+    //     correctAnswer: "Sant"
+    // },
     // {
     //     question: "Vem upfann glödlampan?",
     //     type: "radio",
@@ -31,6 +31,12 @@ let questions = [
     //     correctAnswer: "Sant"
     // },
     // {
+    //     question: "Vilka länder är inte med i EU?",
+    //     type: "checkbox",
+    //     answers: ["Irland", "Island", "Norge", "Liechtenstein"],
+    //     correctAnswer: ["Island", "Norge", "Liechtenstein"],
+    // },
+    // {
     //     question: "Vad dricker Fantomen helst?",
     //     type: "radio",
     //     answers: ["Cola", "Vatten", "Kaffe", "Mjölk"],
@@ -42,180 +48,131 @@ let questions = [
     //     answers: ["1985", "1986", "1987", "1988"],
     //     correctAnswer: "1986"
     // },
-    // {
-    //     question: "Hur länge sover en vuxen människa i Sverige i genomsnitt per natt?",
-    //     type: "radio",
-    //     answers: ["Strax under sju timmar", "Strax under åtta timmar", "Strax under nio timmar"],
-    //     correctAnswer: "Strax under sju timmar"
-    // }
-];
-
-let checkboxQuestions = [
     {
-        question: "Vilka två metoder kan jag använda om jag vill ta bort ett element i en array?",
+        question: "Hur länge sover en vuxen människa i Sverige i genomsnitt per natt?",
+        type: "radio",
+        answers: ["Strax under sju timmar", "Strax under åtta timmar", "Strax under nio timmar"],
+        correctAnswer: "Strax under sju timmar"
+    },
+    {
+        question: "Vilka metoder kan jag använda om jag vill ta bort ett element i en array?",
         type: "checkbox",
         answers: ["pop", "push", "shift", "unshift"],
         correctAnswer: ["pop", "shift"],
     },
     {
-        question: "Vilka tre länder är inte med i EU?",
-        type: "checkbox",
-        answers: ["Irland", "Island", "Norge", "Liechtenstein"],
-        correctAnswer: ["Island", "Norge", "Liechtenstein"],
-    },
-    {
-        question: "Vilka tre namn har du?",
+        question: "Vilka namn har du?",
         type: "checkbox",
         answers: ["Sofia", "Tove", "Helena", "Madeleine"],
         correctAnswer: ["Sofia", "Tove", "Helena"]
     }
 ];
 
-
-//variables
-let backgroundBtn = get(".backgroundBtn");
+//variabler
+let backgroundBtn = get(".background-btn");
 let container = get(".container");
-let containerBonus = get(".containerBonus");
 let scoreH4 = create("h4");
+
 let submitBtn = create("button");
-submitBtn.classList.add("submitBtn");
+submitBtn.classList.add("submit-btn");
 submitBtn.innerText = "Kolla svar";
-let radioBtnValue = [];
 counter = 0;
- 
-//funktion som skapar container till frågor
 
 //funktion som skapar svars-alternativ
 let createLi = (item, i, type) => {
     let li = create("li");
-    li.innerHTML = `<input type="${type}" name="${type}question${i}" id="${item}${i}" value="${item}" class="${type}">
+    li.innerHTML = `<input type="${type}" name="${type}-question-${i}" id="${item}${i}" value="${item}">
     <label for="${item}${i}">${item}</label>`;
     return li;
 }
 
 //skapar en div och en ul för varje fråga
 //appendar frågor och svarsalternativ
-let writeQuestions = (arr, secondArr) => {
+let writeQuestions = (arr) => {
     arr.forEach((question, i) => {
         let questionDiv = create("div");
-        questionDiv.classList.add("question-div");
         let questionH3 = create("h3");
-        let list = create("ul");
+        questionH3.classList.add(`h3-${i}`);
         questionH3.innerText = question.question;
-        questionDiv.append(questionH3, list);
-        container.append(questionDiv);
-    
-        question.answers.forEach(answer => {
-                let li = createLi(answer, i, "radio");
-                list.append(li);
-        })
-    })
 
-    //bonusfrågor rubrik
-    let h3 = create("h3");
-    let p = create("p");
-    h3.innerText = "Bonusfrågor!";
-    h3.classList.add("bonus-question");
-    p.innerText = "Bonusfrågor är frivilliga att svara på men krävs för att nå de högre betygsnivåerna. OBS, man får bara poäng om alla rätta alternativ är ikryssade under varje fråga. Ohoj!";
-    container.append(h3, p);
-
-    //skriver ut bonusfrågor
-    secondArr.forEach((question, i) => {
-        let questionDiv = create("div");
-        questionDiv.classList.add("question-div");
-        let questionH3 = create("h3");
-        let bonusQuestionP = create("p");
-        bonusQuestionP.classList.add(`p${i}`);
         let list = create("ul");
-        questionH3.innerText = question.question;
+        let questionP = create("p");
+        questionP.classList.add(`p-${i}`);
         container.append(questionDiv);
-        questionDiv.append(questionH3, bonusQuestionP, list);
+        questionDiv.append(questionH3, questionP, list);
     
-        question.answers.forEach(answer => {
-                let li = createLi(answer, i, "checkbox");
-                list.append(li);
-        })
-        
+        if (question.type === "radio") {
+            question.answers.forEach(answer => {
+                    let li = createLi(answer, i, "radio");
+                    list.append(li);
+            })
+        } else if (question.type === "checkbox") {
+            question.answers.forEach(answer => {
+                    let li = createLi(answer, i, "checkbox");
+                    list.append(li);
+            })
+            
+        }
     })
-
     container.append(submitBtn, scoreH4);
     submitBtn.addEventListener("click", () => {
-        checkAnswers(arr, secondArr);
+        checkAnswers(arr);
     })
 }
 
 //kolla användarens svar
-//if else beroende på typ? 
-let checkAnswers = (arr, secondArr) => {
-    
-    //rätta radio-frågor
-    if (document.querySelectorAll("[type='radio']:checked").length < arr.length) {
-        scoreH4.innerText = "Du har inte fyllt i de obligatoriska frågorna. \nGissa om du inte kan!"
-    } else {
-        let radioBtnAnswers = document.querySelectorAll(" .radio:checked");
-        radioBtnAnswers.forEach(item => {
-            radioBtnValue.push(item.value);
-        })
+let checkAnswers = (arr) => {
+    let checkbox = [];
+    let rightCheckboxAnswers = [];
+    let radioBtnAnswer = [];
 
-        radioBtnValue.forEach((item, i) => {
-            let q = get(`[name='radioquestion${i}']:checked`);
-
-            if (item === arr[i].correctAnswer) {
+    for (let i = 0; i < arr.length; i++) {
+        let title = get(`.h3-${i}`);
+        if (arr[i].type === "radio") {
+            radioBtnAnswer = document.querySelector(`[name='radio-question-${i}']:checked`);
+            if (radioBtnAnswer === null) {
+                title.innerText += " (0p)";
+            } else if (radioBtnAnswer.value === arr[i].correctAnswer) {
                 counter++;
-                // q.style.accentColor = "SeaGreen";
-                q.nextElementSibling.innerHTML += ` - Rätt svar`;
-                q.nextElementSibling.style.color = "SeaGreen";
+                radioBtnAnswer.nextElementSibling.style.color = "SeaGreen";
+                title.innerText += " (1p)";
             } else {
-                // q.style.accentColor = "IndianRed";
-                q.nextElementSibling.innerHTML += ` - Fel svar`;
-                q.nextElementSibling.style.color = "IndianRed";
+                radioBtnAnswer.nextElementSibling.style.color = "Crimson";
+                title.innerText += " (0p)";
             }
-        })
+        } else if (arr[i].type === "checkbox") {
+            checkbox = document.querySelectorAll(`[name='checkbox-question-${i}']:checked`);
+            rightCheckboxAnswers = arr[i].correctAnswer;
 
-
-        //rätta bonusfrågor
-        //------------------------------------------
-        //hämta svaren från en fråga i taget
-        let checkbox = [];
-        let checkboxValue = [];
-        let rightcheckboxAnswers = [];
-        for (let i = 0; i < secondArr.length; i++) {
-            checkbox = document.querySelectorAll(`[name='checkboxquestion${i}']:checked`); //userinput första frågan
-
-            rightcheckboxAnswers = secondArr[i].correctAnswer;
-
-            //för att få ut values på userinput
-            //skriva ut rätt/fel svar
-            countAnswers = "";
-            checkbox.forEach(item => {
-                if (rightcheckboxAnswers.includes(item.value)) {
-                    item.nextElementSibling.style.color = "SeaGreen"
-                    item.nextElementSibling.innerText += " - Rätt svar" 
+            let countAnswers = "";
+            checkbox.forEach(box => {
+                if (rightCheckboxAnswers.includes(box.value)) {
                     countAnswers++;
-                    checkboxValue.push(item.value);
+                    box.nextElementSibling.style.color = "SeaGreen";
                 } else {
-                    item.nextElementSibling.style.color = "IndianRed"
-                    item.nextElementSibling.innerText += " - Fel svar" 
+                    countAnswers--;
+                    box.nextElementSibling.style.color = "crimson";
                 }
             })
-            if (countAnswers === rightcheckboxAnswers.length) {
+            
+            let checkboxComment = document.querySelector(`.p-${i}`);
+            if (countAnswers === rightCheckboxAnswers.length) {
                 counter++;
+                title.innerText += " (1p)";
             } else {
-                let ppp = document.querySelector(`.p${i}`);
-                ppp.innerText = `Du måste hitta ${rightcheckboxAnswers.length} svar för att få poäng`
+                title.innerText += " (0p)";
+                checkboxComment.innerText = `Det finns ${rightCheckboxAnswers.length} rätta svarsalternativ, \ndu måste hitta alla för att poäng.`
             }
         }
 
-        //------------------------------------------
-        scoreResult(scoreH4, arr, secondArr);
+        scoreResult(scoreH4, arr);
         submitBtn.remove(); 
     }
 }
 
 //skriv ut resultat med gradering
-//hur vill du ha det? Fixa!
-let scoreResult = (score, arr, secondArr) => {
-    let length = arr.length + secondArr.length;
+let scoreResult = (score, arr) => {
+    let length = arr.length;
     score.innerText = `Du fick ${counter} rätt av ${length} möjliga!`;    
     if (counter === length) {
         score.innerText += "\n Wooo! Hurra! Snyggt!"
@@ -223,27 +180,23 @@ let scoreResult = (score, arr, secondArr) => {
     } else if (counter > (0.75 * length)) {
         score.innerText += "\n Bra jobbat! Ett Mycket väl godkänt resultat. "
         score.style.color = "SeaGreen";
-    } else if (counter >= (0.5 * arr.length)) {
+    } else if (counter > (0.5 * length)) {
         score.innerText += "\n Det ger ett godkänt resultat: helt ok va!"
-        score.style.color = "LightSalmon";
-    } else if (counter < (0.5 * length)) {
+        score.style.color = "Goldenrod";
+    } else if (counter < (0.6 * length)) {
         score.innerText += "\n Underkänt! Kanske testa igen?"
         score.style.color = "IndianRed";
     }
 }
 
+//togglar dark-mode/light-mode 
 backgroundBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     container.classList.toggle("dark-mode-container");
-    let labels = document.querySelectorAll("label");
-    labels.forEach(item => {
-        item.classList.toggle("dark-mode-label")
-    })
-    let buttons = document.querySelectorAll("button");
-    buttons.forEach(item => {
+    document.querySelectorAll("button").forEach(item => {
         item.classList.toggle("button-dark-mode")
     })
 })
 
-writeQuestions(questions, checkboxQuestions);
-
+//skriver ut frågorna
+writeQuestions(questions);
